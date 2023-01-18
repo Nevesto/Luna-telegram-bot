@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/Nevesto/telegram-bot.git",
-  "author": "nevest <guilhermejcarlucci@hotmail.com>",
+  "author": "nevest",
   "license": "MIT"
 }
