@@ -46,19 +46,10 @@ async def hand_sticker(client, message):
     print(message.chat.username, message.text)
     await message.reply('Parece até o Paullinho, só manda figurinhas.')
 
-
-
-
 # deixar abaixo de todos os comandos.
 @app.on_message()
 async def messages(client, message):
     print(message.chat.username, message.text)
     await message.reply(message.text + '????')
-
-
-# async def main():
-#     await app.start()
-#     await app.send_message('@Nevestpq', 'Seja bem vindo ao meu mundo!')
-#     await app.stop()
 
 app.run()
