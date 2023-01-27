@@ -28,26 +28,56 @@ async def menu(client, message):
         )
 
 #comandos do bot
-@app.on_message(filters.command('help'))
-async def help(client, message):
-    print(f"{message.chat.username}: {message.text}")
-    await message.reply('Olá, eu sou Luna, um bot em desenvolvimento. \n Eu estou sendo criada para suprir diversas necessidades. \nAinda estou em fase de desenvolvimento, mas você pode se divertir com os meus comandos! \n Use: /commands para ver todos os meus comandos!')
-
-@app.on_message(filters.command('commands'))
-async def ls_commands(client, message):
-    await message.reply(
-        f'Aqui estão a minha lista de comandos: \n /help - Ajuda com a interação do bot. \n/commands - Lista todos os comandos do bot. \n /pic - **(BETA)** Retorna uma foto. \n /bitcoin - Te permite monitorar o valor do bitcoin. \n /eth - Te permite monitorar o valor do Etherium.')
-
-@app.on_message(filters.command('git'))
+@app.on_callback_query()
+async def callback(client, callback_query):
+    pages = {
+        'data': {
+            'proximo': InlineKeyboardButton('Próximo', callback_data='page_1'),
+            'anterior': InlineKeyboardButton('Anterior', callback_data='data'),
+            'texto': 'Home'
+        },
+        'page_1': {
+            'proximo': InlineKeyboardButton('Próximo', callback_data='page_2'),
+            'anterior': InlineKeyboardButton('Anterior', callback_data='data'),
+            'texto': 'Você está na página 1'
+        },
+        'page_2': {
+            'proximo': InlineKeyboardButton('Próximo', callback_data='data'),
+            'anterior': InlineKeyboardButton('Anterior', callback_data='page_1'),
+            'texto': 'Você está na página 2'
+        }
+    }
+    page = pages[callback_query.data]
+    await callback_query.edit_message_text(
+        page['texto'],
+        reply_markup = InlineKeyboardMarkup([[
+            page['anterior'], page['proximo']
+        ]])
+    )
+    
+@app.on_message(filters.command('utils'))
 async def message_button(client, message):
     buttons = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton('Nevesto Github.', url='https://github.com/Nevesto')
+                InlineKeyboardButton('Callback', callback_data='data'),
+                InlineKeyboardButton('Git', url='https://github.com/Nevesto')
             ]
         ]
     )
-    await message.reply('Clique no botão para acessar o github do meu criador!', reply_markup=buttons)
+    await message.reply('Navegue pelas minhas funções!', reply_markup=buttons)
+
+@app.on_message(filters.command('help') | filters.command('start'))
+async def help(client, message):
+    print(f"{message.chat.username}: {message.text}")
+    await message.reply('Olá, eu sou Luna, um bot em desenvolvimento. \nEu estou sendo criada para suprir diversas necessidades. \nAinda estou em fase de desenvolvimento, mas você pode se divertir com os meus comandos! \nUse: **/commands** para ver todos os meus comandos!')
+
+@app.on_message(filters.command('commands'))
+async def ls_commands(client, message):
+    await message.reply(
+        f'**Aqui está a minha lista de comandos:** \n**/help** - Ajuda com a interação do bot. \n**/commands** - Lista todos os comandos do bot. \n**/pic** - **(BETA)** Retorna uma foto. \n **/git** - Github do desenvolvedor. \n /bitcoin - Te permite monitorar o valor do bitcoin. \n /eth - Te permite monitorar o valor do Etherium.')
+
+
 
 @app.on_message(filters.photo)
 async def hand_photo(client, message):
