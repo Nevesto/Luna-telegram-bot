@@ -18,7 +18,8 @@ async def menu(client, message):
     menu = ReplyKeyboardMarkup(
         [
             ['/help', '/commands'],
-            ['/pic', '/bitcoin', '/eth']
+            ['/pic', '/bitcoin', '/eth'],
+            ['/utils']
         ],
         resize_keyboard=True
     )
@@ -76,8 +77,6 @@ async def help(client, message):
 async def ls_commands(client, message):
     await message.reply(
         f'**Aqui está a minha lista de comandos:** \n**/help** - Ajuda com a interação do bot. \n**/commands** - Lista todos os comandos do bot. \n**/pic** - **(BETA)** Retorna uma foto. \n **/git** - Github do desenvolvedor. \n /bitcoin - Te permite monitorar o valor do bitcoin. \n /eth - Te permite monitorar o valor do Etherium.')
-
-
 
 @app.on_message(filters.photo)
 async def hand_photo(client, message):
