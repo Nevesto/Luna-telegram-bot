@@ -1,7 +1,7 @@
 {
   "name": "telegram-bot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "bot.py",
   "repository": "https://github.com/Nevesto/telegram-bot.git",
   "author": "nevest",
   "license": "MIT"
